@@ -1,19 +1,13 @@
 <script lang="ts">
-    import { loginState } from "$lib/data";
+    import {performLogin} from "$lib/login";
 
     let email = "";
 
-    async function performLogin() {
-        // TODO this code should actually do a login and not just set the store value
-        loginState.update((n) => {
-            return {
-                email: email,
-                token: "UNKNOWN FAKE TOKEN"
-            }
-        })
+    async function doLogin() {
+        performLogin(email);
     }
 </script>
 
 <h2>Login</h2>
 <input bind:value={email} />
-<button on:click={performLogin}>Login</button>
+<button on:click={doLogin}>Login</button>

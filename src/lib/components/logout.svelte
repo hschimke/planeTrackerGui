@@ -1,12 +1,9 @@
 <script lang="ts">
-    import { loginState } from "$lib/data";
+    import {performLogout} from "$lib/login";
 
-    let email = "";
-
-    async function performLogout() {
-        // TODO this code should actually do a login and not just set the store value
-        loginState.set({email:"", token:""})
+    async function doLogout() {
+       performLogout();
     }
 </script>
 
-<button on:click={performLogout}>Logout</button>
+<button on:click={doLogout}>Logout</button>
