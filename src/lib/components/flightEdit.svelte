@@ -36,6 +36,7 @@
             await updateFlight($loginState, flight);
             dispatch("flightedit", {
                 type: "update",
+                id: flight.id
             });
         } else {
             alert("Cannot complete");

@@ -6,8 +6,13 @@
     import { loginState } from "$lib/data";
 
     let flightPromise = getFlights($loginState);
-    function doEditUpdate(event){
-        if(event.detail.type === "add"){
+    function doEditUpdate(event) {
+        if (event.detail.type === "add") {
+            flightPromise = getFlights($loginState);
+        }
+    }
+    function doListUpdate(event) {
+        if (event.detail.type === "delete" || event.detail.type === "update") {
             flightPromise = getFlights($loginState);
         }
     }
@@ -19,7 +24,7 @@
 {#await flightPromise}
     <p>loading...</p>
 {:then flights}
-    <FlightList {flights} />
-    {:catch error}
+    <FlightList {flights} on:listedit={doListUpdate} />
+{:catch error}
     <p>error: {error}</p>
 {/await}
