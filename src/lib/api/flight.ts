@@ -1,14 +1,14 @@
 import type { LoginState } from "$lib/data";
 import { performLogout } from "$lib/login";
 
-const API_PREFIX = "localhost:1234/api"
-const API_VERSION = "v1"
+const API_PREFIX = "http://localhost:8378/api"
+const API_VERSION = "v1/"
 
 type FlightId = string;
 type AirportCode = string;
 type UserId = string
 
-declare interface Flight {
+export declare interface Flight {
     id: FlightId;
     origin: AirportCode;
     destination: AirportCode;
@@ -41,7 +41,8 @@ export async function getFlights(loginState: LoginState): Promise<Flight[]> {
         body: JSON.stringify(sendStruct),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + loginState.token
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
         }
     });
 
@@ -49,7 +50,7 @@ export async function getFlights(loginState: LoginState): Promise<Flight[]> {
 
     switch (response.status) {
         case 200:
-            returnData = JSON.parse(await response.json());
+            returnData = await response.json();
             break;
         case 401:
             alert("Unauthorized access, you have been logged out.")
@@ -64,13 +65,15 @@ export async function getFlights(loginState: LoginState): Promise<Flight[]> {
 
 export async function addFlight(loginState: LoginState, flight: Flight): Promise<AddFlightReturn> {
     flight.email = loginState.email;
+    
     const address = API_PREFIX + "/" + API_VERSION + "addFlight";
     const response = await fetch(address, {
         method: "POST",
         body: JSON.stringify(flight),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + loginState.token
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
         }
     });
 
@@ -78,7 +81,7 @@ export async function addFlight(loginState: LoginState, flight: Flight): Promise
 
     switch (response.status) {
         case 200:
-            returnData = JSON.parse(await response.json());
+            returnData = await response.json();
             break;
         case 401:
             alert("Unauthorized access, you have been logged out.")
@@ -99,7 +102,8 @@ export async function deleteFlight(loginState: LoginState, flight: Flight): Prom
         body: JSON.stringify(flight),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + loginState.token
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
         }
     });
 
@@ -107,7 +111,7 @@ export async function deleteFlight(loginState: LoginState, flight: Flight): Prom
 
     switch (response.status) {
         case 200:
-            returnData = JSON.parse(await response.json());
+            returnData = await response.json();
             break;
         case 401:
             alert("Unauthorized access, you have been logged out.")
@@ -128,7 +132,8 @@ export async function updateFlight(loginState: LoginState, flight: Flight): Prom
         body: JSON.stringify(flight),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + loginState.token
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
         }
     });
 
@@ -136,7 +141,7 @@ export async function updateFlight(loginState: LoginState, flight: Flight): Prom
 
     switch (response.status) {
         case 200:
-            returnData = JSON.parse(await response.json());
+            returnData = await response.json();
             break;
         case 401:
             alert("Unauthorized access, you have been logged out.")

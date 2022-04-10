@@ -4,11 +4,13 @@ import { browser } from '$app/env';
 export interface LoginState {
     email: string;
     token: String;
+    type: string;
 }
 
 const defaultLoginState: LoginState = {
     email: "",
     token: "",
+    type: "fake"
 }
 
 const initialLoginState = browser ? JSON.parse(window.localStorage.getItem('loginState')) as LoginState ?? defaultLoginState : defaultLoginState;
