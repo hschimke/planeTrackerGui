@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Flight } from "$lib/api/flight";
     import { getFlights } from "$lib/api/flight";
-    import FlightList from "$lib/components/flightList.svelte";
+    import FlightList from "$lib/components/flightList/flightList.svelte";
     import FlightEdit from "$lib/components/flightEdit.svelte";
     import { loginState } from "$lib/data";
 

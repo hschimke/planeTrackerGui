@@ -31,6 +31,16 @@ declare interface DeleteFlightReturn {
     status: string;
 }
 
+declare interface BulkUploadRequest {
+	user       : UserId;
+	type       : string;
+	flight_data : string;
+}
+
+declare interface BuldUploadResponse {
+	flights: FlightId[]
+}
+
 export async function getFlights(loginState: LoginState): Promise<Flight[]> {
     const sendStruct: GetAllRequest = {
         user: loginState.email
@@ -138,6 +148,41 @@ export async function updateFlight(loginState: LoginState, flight: Flight): Prom
     });
 
     let returnData: UpdateFlightReturn;
+
+    switch (response.status) {
+        case 200:
+            returnData = await response.json();
+            break;
+        case 401:
+            alert("Unauthorized access, you have been logged out.")
+            performLogout();
+            break;
+        default:
+            break;
+    }
+
+    return returnData;
+}
+
+export async function bulkUploadFlight(loginState: LoginState, flightData: string): Promise<BuldUploadResponse> {
+    let buildUploadData : BulkUploadRequest = {
+        user: loginState.email,
+        type: "shortcut",
+        flight_data: flightData
+    }
+    
+    const address = API_PREFIX + "/" + API_VERSION + "bulkAddFlights";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(buildUploadData),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: BuldUploadResponse;
 
     switch (response.status) {
         case 200:

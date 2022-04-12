@@ -3,6 +3,7 @@
     import { addFlight, updateFlight } from "$lib/api/flight";
     import { loginState } from "$lib/data";
     import { createEventDispatcher } from "svelte";
+    import { getProperDateFormatForNow } from "$lib/dateFormat";
 
     const dispatch = createEventDispatcher();
 
@@ -11,7 +12,7 @@
         origin: "",
         destination: "",
         tail_number: "",
-        date: "",
+        date: getProperDateFormatForNow(),
         email: "",
     };
     let buttonText = "Add";
@@ -29,14 +30,14 @@
                 origin: "",
                 destination: "",
                 tail_number: "",
-                date: "",
+                date: getProperDateFormatForNow(),
                 email: "",
             };
         } else if (buttonText === "Update") {
             await updateFlight($loginState, flight);
             dispatch("flightedit", {
                 type: "update",
-                id: flight.id
+                id: flight.id,
             });
         } else {
             alert("Cannot complete");
@@ -44,8 +45,21 @@
     }
 </script>
 
-<input type="text" bind:value={flight.origin} />
-<input type="text" bind:value={flight.destination} />
-<input type="text" bind:value={flight.tail_number} />
-<input type="date" bind:value={flight.date} />
+<label>
+    Origin
+    <input type="text" bind:value={flight.origin} />
+</label>
+<label>
+    Destination
+    <input type="text" bind:value={flight.destination} />
+</label>
+<label>
+    Tail
+    <input type="text" bind:value={flight.tail_number} />
+</label>
+<label>
+    Date
+    <input type="date" bind:value={flight.date} />
+</label>
+
 <button on:click={doClick}>{buttonText}</button>

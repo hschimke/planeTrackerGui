@@ -10,7 +10,7 @@ export interface LoginState {
 const defaultLoginState: LoginState = {
     email: "",
     token: "",
-    type: "fake"
+    type: ""
 }
 
 const initialLoginState = browser ? JSON.parse(window.localStorage.getItem('loginState')) as LoginState ?? defaultLoginState : defaultLoginState;

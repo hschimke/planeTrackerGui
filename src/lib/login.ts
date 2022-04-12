@@ -1,16 +1,22 @@
-import { loginState } from "$lib/data";
+import { loginState, type LoginState } from "$lib/data";
+import { goto } from "$app/navigation";
 
-export async function performLogin(email) {
+export async function performLogin(email, token = "UNKNOWN FAKE TOKEN", type = "fake") {
     // TODO this code should actually do a login and not just set the store value
     loginState.update((n) => {
         return {
             email: email,
-            token: "UNKNOWN FAKE TOKEN"
+            token: token,
+            type: type,
         }
     })
 }
 
-export async function performLogout() {
+export async function performLogout(state: LoginState) {
     // TODO this code should actually do a login and not just set the store value
-    loginState.set({ email: "", token: "" })
+    if (state.type === "google") {
+        google.accounts.id.disableAutoSelect();
+    }
+    loginState.set({ email: "", token: "", type: "" })
+    goto("/")
 }

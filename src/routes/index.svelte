@@ -1,3 +1,3 @@
-<h1>PlaneTracker</h1>
+<h2>About Us</h2>
 <p>PlaneTracker helps you keep track of planes you have flown in.</p>
 <a href="/flights">Flights</a>
