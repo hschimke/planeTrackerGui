@@ -1,7 +1,7 @@
 import type { LoginState } from "$lib/data";
 import { performLogout } from "$lib/login";
 
-const API_PREFIX = "http://localhost:8378/api"
+const API_PREFIX = import.meta.env.VITE_API_ENDPOINT;
 const API_VERSION = "v1/"
 
 type FlightId = string;
