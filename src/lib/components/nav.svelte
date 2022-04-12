@@ -53,7 +53,7 @@ li a:hover {
             {#if $loginState.email !== ""}
                 {$loginState.email} <Logout />
             {:else}
-                <p>Please login</p>
+                <span>Please login</span>
             {/if}
         </div>
     </li>

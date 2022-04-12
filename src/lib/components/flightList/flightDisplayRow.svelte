@@ -10,3 +10,19 @@
     <td>{flight.date}</td>
     <td><slot /></td>
 </tr>
+
+<style>
+    tr {
+        height: 1.25em;
+        font-family: monospace;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #999999;
+    }
+
+    td {
+        max-width: 16em;
+        min-width: 9em;
+    }
+</style>

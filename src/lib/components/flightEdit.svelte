@@ -46,20 +46,26 @@
 </script>
 
 <label>
-    Origin
-    <input type="text" bind:value={flight.origin} />
+    <span>Origin</span>
+    <input type="text" placeholder="Origin" title="Origin" bind:value={flight.origin} />
 </label>
 <label>
-    Destination
-    <input type="text" bind:value={flight.destination} />
+    <span>Destination</span>
+    <input type="text" placeholder="Destination" title="Destination" bind:value={flight.destination} />
 </label>
 <label>
-    Tail
-    <input type="text" bind:value={flight.tail_number} />
+    <span>Tail</span>
+    <input type="text" placeholder="Tail" title="Tail" bind:value={flight.tail_number} />
 </label>
 <label>
-    Date
+    <span>Date</span>
     <input type="date" bind:value={flight.date} />
 </label>
 
 <button on:click={doClick}>{buttonText}</button>
+
+<style>
+    label span {
+        display: none;
+    }
+</style>

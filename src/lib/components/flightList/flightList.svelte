@@ -38,35 +38,53 @@
 </script>
 
 <table>
-    <thead>
-        <tr>
-            <td>Origin</td>
-            <td>Destination</td>
-            <td>Tail</td>
-            <td>Date</td>
-            <td />
-        </tr>
-    </thead>
-    <tdata>
-        {#each flights as flight (flight.id)}
-            {#if editId === flight.id}
+    <tr>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Tail</th>
+        <th>Date</th>
+        <th />
+    </tr>
+    {#each flights as flight (flight.id)}
+        {#if editId === flight.id}
             <tr>
-                <td colspan="4"><FlightEdit {flight} on:flightedit={passEdit} /></td>
-                <td><button on:click={doCancelEdit}>Cancel</button></td>
+                <td colspan="5">
+                    <FlightEdit {flight} on:flightedit={passEdit} />
+                    <button on:click={doCancelEdit}>Cancel</button>
+                </td>
             </tr>
-            {:else}
-                <FlightDisplayRow {flight}>
-                    <button
-                        on:click={() => {
-                            doEdit(flight.id);
-                        }}>Edit</button
-                    ><button
-                        on:click={() => {
-                            doDelete(flight);
-                        }}>Delete</button
-                    >
-                </FlightDisplayRow>
-            {/if}
-        {/each}
-    </tdata>
+        {:else}
+            <FlightDisplayRow {flight}>
+                <button
+                    on:click={() => {
+                        doEdit(flight.id);
+                    }}>Edit</button
+                ><button
+                    on:click={() => {
+                        doDelete(flight);
+                    }}>Delete</button
+                >
+            </FlightDisplayRow>
+        {/if}
+    {/each}
 </table>
+
+<style>
+    tr {
+        height: 1.75em;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    table {
+        border-collapse: collapse;
+        margin-left: 2em;
+        max-width: 60%;
+    }
+
+    tr:nth-child(even) {
+        background-color: #999999;
+    }
+</style>
