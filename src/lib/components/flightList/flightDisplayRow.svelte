@@ -6,7 +6,7 @@
 <tr>
     <td>{flight.origin}</td>
     <td>{flight.destination}</td>
-    <td>{flight.tail_number}</td>
+    <td><a href="/planes/{flight.tail_number}">{flight.tail_number}</a></td>
     <td>{flight.date}</td>
     <td><slot /></td>
 </tr>
