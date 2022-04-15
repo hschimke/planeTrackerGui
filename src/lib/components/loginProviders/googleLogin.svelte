@@ -51,7 +51,7 @@
         if (!setupDone) {
             google.accounts.id.initialize({
                 client_id:
-                    "273513084723-0ekj11vodu6cmci80nho7k49u80i9dsr.apps.googleusercontent.com",
+                import.meta.env.VITE_GOOGLE_CLIENT_ID,
                 callback: handleCredentialResponse,
             });
             google.accounts.id.renderButton(

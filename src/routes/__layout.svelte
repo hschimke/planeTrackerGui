@@ -3,6 +3,8 @@
     import Login from "$lib/components/login.svelte";
     import Nav from "$lib/components/nav.svelte"
     import { page } from "$app/stores";
+
+    let version = (import.meta.env.VITE_GIT_HASH === "" || import.meta.env.VITE_GIT_HASH === undefined) ? "unknown_version" : import.meta.env.VITE_GIT_HASH as string;
 </script>
 <style>
     h1 {
@@ -25,3 +27,6 @@
     <Login />
 {/if}
 </div>
+<svelte:head>
+    <meta name="deployed_version_hash" content={version} />
+</svelte:head>
