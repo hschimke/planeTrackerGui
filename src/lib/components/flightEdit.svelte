@@ -68,4 +68,15 @@
     label span {
         display: none;
     }
+    input {
+        max-width: 10em;
+    }
+    @media only screen and (max-width: 600px) {
+    input {
+        max-width: 5em;
+    }
+    input[type="date"]{
+        max-width: 8em;
+    }
+}
 </style>

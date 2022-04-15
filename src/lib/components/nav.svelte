@@ -48,6 +48,9 @@ li a:hover {
     <li>
         <a href="/flights/upload">Upload</a>
         </li>
+        <li>
+          <a href="/about">About</a>
+        </li>
     <li style="float:right">
         <div>
             {#if $loginState.email !== ""}

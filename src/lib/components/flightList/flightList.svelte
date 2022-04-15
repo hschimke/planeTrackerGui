@@ -39,8 +39,8 @@
 
 <table>
     <tr>
-        <th>Origin</th>
-        <th>Destination</th>
+        <th>Orig</th>
+        <th>Dest</th>
         <th>Tail</th>
         <th>Date</th>
         <th />
@@ -86,5 +86,11 @@
 
     tr:nth-child(even) {
         background-color: #999999;
+    }
+
+    @media only screen and (max-width: 600px) {
+        table {
+            margin-left: .5em;
+        }
     }
 </style>
