@@ -1,5 +1,6 @@
 import type { LoginState } from "$lib/data";
 import { performLogout } from "$lib/login";
+import { checkResponse } from "./helpers";
 
 const API_PREFIX = import.meta.env.VITE_API_ENDPOINT
 const API_VERSION = "v1/"
@@ -76,17 +77,7 @@ export async function getFlights(loginState: LoginState): Promise<Flight[]> {
 
     let returnData: Flight[] = [];
 
-    switch (response.status) {
-        case 200:
-            returnData = await response.json();
-            break;
-        case 401:
-            alert("Unauthorized access, you have been logged out.")
-            performLogout(loginState);
-            break;
-        default:
-            break;
-    }
+    returnData = await checkResponse<Flight[]>(loginState,response)
 
     return returnData;
 }
@@ -105,19 +96,7 @@ export async function addFlight(loginState: LoginState, flight: Flight): Promise
         }
     });
 
-    let returnData: AddFlightReturn;
-
-    switch (response.status) {
-        case 200:
-            returnData = await response.json();
-            break;
-        case 401:
-            alert("Unauthorized access, you have been logged out.")
-            performLogout(loginState);
-            break;
-        default:
-            break;
-    }
+    const returnData: AddFlightReturn = await checkResponse<AddFlightReturn>(loginState,response);
 
     return returnData;
 }
@@ -135,19 +114,7 @@ export async function deleteFlight(loginState: LoginState, flight: Flight): Prom
         }
     });
 
-    let returnData: DeleteFlightReturn;
-
-    switch (response.status) {
-        case 200:
-            returnData = await response.json();
-            break;
-        case 401:
-            alert("Unauthorized access, you have been logged out.")
-            performLogout(loginState);
-            break;
-        default:
-            break;
-    }
+    const returnData: DeleteFlightReturn = await checkResponse<DeleteFlightReturn>(loginState,response);
 
     return returnData;
 }
@@ -165,19 +132,7 @@ export async function updateFlight(loginState: LoginState, flight: Flight): Prom
         }
     });
 
-    let returnData: UpdateFlightReturn;
-
-    switch (response.status) {
-        case 200:
-            returnData = await response.json();
-            break;
-        case 401:
-            alert("Unauthorized access, you have been logged out.")
-            performLogout(loginState);
-            break;
-        default:
-            break;
-    }
+    const returnData: UpdateFlightReturn = await checkResponse<UpdateFlightReturn>(loginState,response);
 
     return returnData;
 }
@@ -200,19 +155,7 @@ export async function bulkUploadFlight(loginState: LoginState, flightData: strin
         }
     });
 
-    let returnData: BuldUploadResponse;
-
-    switch (response.status) {
-        case 200:
-            returnData = await response.json();
-            break;
-        case 401:
-            alert("Unauthorized access, you have been logged out.")
-            performLogout(loginState);
-            break;
-        default:
-            break;
-    }
+    const returnData: BuldUploadResponse = await checkResponse<BuldUploadResponse>(loginState,response);
 
     return returnData;
 }
@@ -233,19 +176,7 @@ export async function getPlaneDetails(loginState: LoginState, tail: PlaneTail): 
         }
     });
 
-    let returnData: PlaneDetailResponse
-
-    switch (response.status) {
-        case 200:
-            returnData = await response.json();
-            break;
-        case 401:
-            alert("Unauthorized access, you have been logged out.")
-            performLogout(loginState);
-            break;
-        default:
-            break;
-    }
+    const returnData: PlaneDetailResponse = await checkResponse<PlaneDetailResponse>(loginState,response);
 
     return returnData;
 }
