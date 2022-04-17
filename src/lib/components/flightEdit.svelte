@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Flight } from "$lib/api/flight";
+    import type { Flight, FlightRequest } from "$lib/api/flight";
     import { addFlight, updateFlight } from "$lib/api/flight";
     import { loginState } from "$lib/data";
     import { createEventDispatcher } from "svelte";
@@ -15,13 +15,16 @@
         date: getProperDateFormatForNow(),
         email: "",
     };
+
+    let includeDefaultPassengers : boolean = false;
+
     let buttonText = "Add";
     if (flight.id !== "") {
         buttonText = "Update";
     }
     async function doClick() {
         if (buttonText === "Add") {
-            await addFlight($loginState, flight);
+            await addFlight($loginState, flight as FlightRequest, includeDefaultPassengers);
             dispatch("flightedit", {
                 type: "add",
             });
@@ -61,6 +64,12 @@
     <span>Date</span>
     <input type="date" bind:value={flight.date} />
 </label>
+{#if buttonText === "Add"}
+<label>
+    <span>Default Passengers</span>
+    <input type="checkbox" bind:checked={includeDefaultPassengers} />
+    </label>
+{/if}
 
 <button on:click={doClick}>{buttonText}</button>
 

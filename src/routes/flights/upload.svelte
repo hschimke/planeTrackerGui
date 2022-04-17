@@ -4,9 +4,10 @@
     import { bulkUploadFlight } from "$lib/api/flight";
 
     let bulkData;
+    let includeDefaultPassengers: boolean = false;
 
     async function doUpload() {
-        let newIds = await bulkUploadFlight($loginState, bulkData);
+        let newIds = await bulkUploadFlight($loginState, bulkData, includeDefaultPassengers);
         goto("/flights");
     }
 </script>
@@ -30,4 +31,8 @@
 </p>
 
 <textarea bind:value={bulkData} />
+<label>
+    <span>Include Default Passengers?</span>
+    <input type="checkbox" bind:checked={includeDefaultPassengers} />
+    </label>
 <button on:click={doUpload}>Upload</button>

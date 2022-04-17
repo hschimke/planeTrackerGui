@@ -1,14 +1,14 @@
 import type { LoginState } from "$lib/data";
 import { performLogout } from "$lib/login";
-import { checkResponse } from "./helpers";
+import { checkResponse } from "$lib/api/helpers";
 
 const API_PREFIX = import.meta.env.VITE_API_ENDPOINT
 const API_VERSION = "v1/"
 
-type FlightId = string;
-type AirportCode = string;
-type UserId = string
-type PlaneTail = string
+export type FlightId = string;
+export type AirportCode = string;
+export type UserId = string
+export type PlaneTail = string
 
 export declare interface Flight {
     id: FlightId;
@@ -17,6 +17,10 @@ export declare interface Flight {
     tail_number: string;
     date: string;
     email: UserId;
+}
+
+export declare interface FlightRequest extends Flight {
+    include_default_passengers: boolean;
 }
 
 declare interface GetAllRequest {
@@ -36,6 +40,7 @@ declare interface DeleteFlightReturn {
 declare interface BulkUploadRequest {
     user: UserId;
     type: string;
+    include_default_passengers: boolean;
     flight_data: string;
 }
 
@@ -82,8 +87,9 @@ export async function getFlights(loginState: LoginState): Promise<Flight[]> {
     return returnData;
 }
 
-export async function addFlight(loginState: LoginState, flight: Flight): Promise<AddFlightReturn> {
+export async function addFlight(loginState: LoginState, flight: FlightRequest, includeDefault: boolean): Promise<AddFlightReturn> {
     flight.email = loginState.email;
+    flight.include_default_passengers = includeDefault;
 
     const address = API_PREFIX + "/" + API_VERSION + "addFlight";
     const response = await fetch(address, {
@@ -137,11 +143,12 @@ export async function updateFlight(loginState: LoginState, flight: Flight): Prom
     return returnData;
 }
 
-export async function bulkUploadFlight(loginState: LoginState, flightData: string): Promise<BuldUploadResponse> {
+export async function bulkUploadFlight(loginState: LoginState, flightData: string, includeDefault: boolean): Promise<BuldUploadResponse> {
     let buildUploadData: BulkUploadRequest = {
         user: loginState.email,
         type: "shortcut",
-        flight_data: flightData
+        flight_data: flightData,
+        include_default_passengers: includeDefault,
     }
 
     const address = API_PREFIX + "/" + API_VERSION + "bulkAddFlights";
@@ -180,3 +187,5 @@ export async function getPlaneDetails(loginState: LoginState, tail: PlaneTail): 
 
     return returnData;
 }
+
+export async function addPassengerToFlight(loginState:LoginState){}
