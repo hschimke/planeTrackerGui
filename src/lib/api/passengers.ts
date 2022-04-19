@@ -1,6 +1,6 @@
 import type { LoginState } from "$lib/data";
 import type { UserId, FlightId, Flight } from "$lib/api/flight";
-import { checkResponse } from "$lib/api/helpers";
+import { checkResponse, API_PREFIX, API_VERSION } from "$lib/api/helpers";
 
 interface statusResponse {
     status: boolean;
@@ -53,11 +53,164 @@ interface getFlightsAsPassengerResponse {
     flights: Flight[];
 }
 
-export async function getPassengers(loginState: LoginState) { } //getPassengersForUser
-export async function addPassenger(loginState: LoginState) { } //addPassengerForUser
-export async function removePassenger(loginState: LoginState) { } //removePassengerForUser
-export async function setPassengerDefaultValue(loginState: LoginState) { } //setDefaultStatusForPassengerOfUser
+export async function getPassengers(loginState: LoginState): Promise<passenger[]> {
+    const sendStruct: getPassengersForUserRequest = {
+        user: loginState.email
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "getPassengersForUser";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
 
-export async function addPassengerToFlight(loginState: LoginState) { } //addPassengerToFlight
-export async function removePassengerFrom(loginState: LoginState) { } //removePassengerFromFlight
-export async function getPassengerFlights(loginState: LoginState) { } //getFlightsAsPassenger
+    let returnData: getPassengersForUserResponse;
+
+    returnData = await checkResponse<getPassengersForUserResponse>(loginState, response)
+
+    return returnData.passengers;
+}
+
+export async function addPassenger(loginState: LoginState, passenger: passenger) {
+    const sendStruct: addPassengerForUserRequest = {
+        user: loginState.email,
+        passenger: passenger
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "addPassengerForUser";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: addPassengerForUserResponse;
+
+    returnData = await checkResponse<addPassengerForUserResponse>(loginState, response)
+
+    return returnData.status;
+}
+
+export async function removePassenger(loginState: LoginState, passenger_id: UserId) {
+    const sendStruct: removePassengerForUserRequest = {
+        user: loginState.email,
+        passenger: passenger_id
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "removePassengerForUser";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: removePassengerForUserResponse;
+
+    returnData = await checkResponse<removePassengerForUserResponse>(loginState, response)
+
+    return returnData.status;
+}
+
+export async function setPassengerDefaultValue(loginState: LoginState, passenger_id: UserId, defaultStatus: boolean) {
+    const sendStruct: setDefaultStatusForPassengerOfUserRequest = {
+        user: loginState.email,
+        default_status: defaultStatus,
+        passenger: passenger_id
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "setDefaultStatusForPassengerOfUser";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: setDefaultStatusForPassengerOfUserResponse;
+
+    returnData = await checkResponse<setDefaultStatusForPassengerOfUserResponse>(loginState, response)
+
+    return returnData.status;
+}
+
+export async function addPassengerToFlight(loginState: LoginState, flight: FlightId, passenger_id: UserId) {
+    const sendStruct: addPassengerToFlightRequest = {
+        user: loginState.email,
+        flight: flight,
+        passenger: passenger_id
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "addPassengerToFlight";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: addPassengerToFlightResponse;
+
+    returnData = await checkResponse<addPassengerToFlightResponse>(loginState, response)
+
+    return returnData.status;
+}
+
+export async function removePassengerFrom(loginState: LoginState, flight: FlightId, passenger_id: UserId) {
+    const sendStruct: removePassengerFromFlightRequest = {
+        user: loginState.email,
+        flight: flight,
+        passenger: passenger_id
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "removePassengerFromFlight";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: removePassengerFromFlightResponse;
+
+    returnData = await checkResponse<removePassengerFromFlightResponse>(loginState, response)
+
+    return returnData.status;
+}
+
+export async function getPassengerFlights(loginState: LoginState): Promise<Flight[]> {
+    const sendStruct: getFlightsAsPassengerRequest = {
+        passenger: loginState.email
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "getFlightsAsPassenger";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: getFlightsAsPassengerResponse;
+
+    returnData = await checkResponse<getFlightsAsPassengerResponse>(loginState, response)
+
+    return returnData.flights;
+} 

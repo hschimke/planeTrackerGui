@@ -1,8 +1,11 @@
 import type { LoginState } from "$lib/data";
 import { performLogout } from "$lib/login";
 
-export async function checkResponse<T>(loginState: LoginState, response:Response) {
-    let returnData :T;
+export const API_PREFIX = import.meta.env.VITE_API_ENDPOINT
+export const API_VERSION = "v1/"
+
+export async function checkResponse<T>(loginState: LoginState, response: Response) {
+    let returnData: T;
     switch (response.status) {
         case 200:
             returnData = await response.json();

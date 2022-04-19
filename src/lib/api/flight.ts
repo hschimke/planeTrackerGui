@@ -1,9 +1,5 @@
 import type { LoginState } from "$lib/data";
-import { performLogout } from "$lib/login";
-import { checkResponse } from "$lib/api/helpers";
-
-const API_PREFIX = import.meta.env.VITE_API_ENDPOINT
-const API_VERSION = "v1/"
+import { checkResponse, API_PREFIX, API_VERSION } from "$lib/api/helpers";
 
 export type FlightId = string;
 export type AirportCode = string;
@@ -82,7 +78,7 @@ export async function getFlights(loginState: LoginState): Promise<Flight[]> {
 
     let returnData: Flight[] = [];
 
-    returnData = await checkResponse<Flight[]>(loginState,response)
+    returnData = await checkResponse<Flight[]>(loginState, response)
 
     return returnData;
 }
@@ -102,7 +98,7 @@ export async function addFlight(loginState: LoginState, flight: FlightRequest, i
         }
     });
 
-    const returnData: AddFlightReturn = await checkResponse<AddFlightReturn>(loginState,response);
+    const returnData: AddFlightReturn = await checkResponse<AddFlightReturn>(loginState, response);
 
     return returnData;
 }
@@ -120,7 +116,7 @@ export async function deleteFlight(loginState: LoginState, flight: Flight): Prom
         }
     });
 
-    const returnData: DeleteFlightReturn = await checkResponse<DeleteFlightReturn>(loginState,response);
+    const returnData: DeleteFlightReturn = await checkResponse<DeleteFlightReturn>(loginState, response);
 
     return returnData;
 }
@@ -138,7 +134,7 @@ export async function updateFlight(loginState: LoginState, flight: Flight): Prom
         }
     });
 
-    const returnData: UpdateFlightReturn = await checkResponse<UpdateFlightReturn>(loginState,response);
+    const returnData: UpdateFlightReturn = await checkResponse<UpdateFlightReturn>(loginState, response);
 
     return returnData;
 }
@@ -162,7 +158,7 @@ export async function bulkUploadFlight(loginState: LoginState, flightData: strin
         }
     });
 
-    const returnData: BuldUploadResponse = await checkResponse<BuldUploadResponse>(loginState,response);
+    const returnData: BuldUploadResponse = await checkResponse<BuldUploadResponse>(loginState, response);
 
     return returnData;
 }
@@ -183,9 +179,9 @@ export async function getPlaneDetails(loginState: LoginState, tail: PlaneTail): 
         }
     });
 
-    const returnData: PlaneDetailResponse = await checkResponse<PlaneDetailResponse>(loginState,response);
+    const returnData: PlaneDetailResponse = await checkResponse<PlaneDetailResponse>(loginState, response);
 
     return returnData;
 }
 
-export async function addPassengerToFlight(loginState:LoginState){}
+export async function addPassengerToFlight(loginState: LoginState) { }
