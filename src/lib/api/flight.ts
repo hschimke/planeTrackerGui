@@ -13,6 +13,7 @@ export declare interface Flight {
     tail_number: string;
     date: string;
     email: UserId;
+    passenger_count: number;
 }
 
 export declare interface FlightRequest extends Flight {

@@ -6,7 +6,7 @@ interface statusResponse {
     status: boolean;
 }
 
-interface passenger {
+export interface passenger {
     passenger_id: UserId;
     default_companion: boolean;
 };

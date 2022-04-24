@@ -8,6 +8,7 @@
     <td class="airport">{flight.destination}</td>
     <td><a href="/planes/{flight.tail_number}">{flight.tail_number}</a></td>
     <td class="date">{flight.date}</td>
+    <td class="pax">{flight.passenger_count}</td>
     <td class="buttons"><slot /></td>
 </tr>
 
@@ -24,6 +25,10 @@
     td {
         max-width: 16em;
         min-width: 9em;
+    }
+
+    td.pax {
+        max-width: 3em;
     }
 
     @media only screen and (max-width: 600px) {

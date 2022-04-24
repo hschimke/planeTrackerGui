@@ -7,6 +7,7 @@
     import { loginState } from "$lib/data";
 
     export let flights: Flight[];
+    export let allowEdit: boolean = true;
 
     let editId = "";
 
@@ -43,27 +44,30 @@
         <th>Dest</th>
         <th>Tail</th>
         <th>Date</th>
+        <th>Pax</th>
         <th />
     </tr>
     {#each flights as flight (flight.id)}
         {#if editId === flight.id}
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     <FlightEdit {flight} on:flightedit={passEdit} />
                     <button on:click={doCancelEdit}>Cancel</button>
                 </td>
             </tr>
         {:else}
             <FlightDisplayRow {flight}>
-                <button
-                    on:click={() => {
-                        doEdit(flight.id);
-                    }}>Edit</button
-                ><button
-                    on:click={() => {
-                        doDelete(flight);
-                    }}>Delete</button
-                >
+                {#if allowEdit}
+                    <button
+                        on:click={() => {
+                            doEdit(flight.id);
+                        }}>Edit</button
+                    ><button
+                        on:click={() => {
+                            doDelete(flight);
+                        }}>Delete</button
+                    >
+                {/if}
             </FlightDisplayRow>
         {/if}
     {/each}
@@ -90,7 +94,7 @@
 
     @media only screen and (max-width: 600px) {
         table {
-            margin-left: .5em;
+            margin-left: 0.5em;
         }
     }
 </style>
