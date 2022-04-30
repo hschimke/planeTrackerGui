@@ -10,13 +10,14 @@
 
 <h2>Future Updates</h2>
 <p>
-    We're currently on version 0.1, but there are some features which are coming
+    We're currently on version 0.3.1, but there are some features which are coming
     before 1.0.
 </p>
 <ul>
     <li>Interesting statistics.</li>
     <li>Flight sharing.</li>
-    <li>Passenger lists</li>
+    <li class="done">Passenger lists</li>
+    <li>Editable Passenger lists!</li>
 </ul>
 
 <h2>Open Source</h2>
@@ -31,3 +32,9 @@
     PlaneTracker is licensed under an MIT license, and uses parts of the MIT
     licensed project <a href="https://github.com/mwgg/Airports">Airports</a>
 </p>
+
+<style>
+    .done {
+        text-decoration: line-through;
+    }
+</style>
