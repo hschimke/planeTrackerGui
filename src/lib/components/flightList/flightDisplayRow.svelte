@@ -1,6 +1,16 @@
 <script lang="ts">
     import type { Flight } from "$lib/api/flight";
+import PaxPopup from "$lib/components/flightList/paxPopup.svelte";
     export let flight: Flight;
+
+    let paxShowId = "";
+
+    const onOver = (flightId) => {
+        paxShowId = flightId;
+    }
+    const onOut = (flightId) => {
+        paxShowId = "";
+    }
 </script>
 
 <tr>
@@ -8,7 +18,10 @@
     <td class="airport">{flight.destination}</td>
     <td><a href="/planes/{flight.tail_number}">{flight.tail_number}</a></td>
     <td class="date">{flight.date}</td>
-    <td class="pax">{flight.passenger_count}</td>
+    <td class="pax" on:mouseleave={() => {onOut(flight.id)}} on:mouseover={() => {onOver(flight.id)}}>
+        {flight.passenger_count}
+        <PaxPopup flightId={flight.id} show={paxShowId === flight.id} />
+    </td>
     <td class="buttons"><slot /></td>
 </tr>
 

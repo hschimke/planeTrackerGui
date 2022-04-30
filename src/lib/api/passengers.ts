@@ -52,6 +52,13 @@ interface getFlightsAsPassengerRequest {
 interface getFlightsAsPassengerResponse {
     flights: Flight[];
 }
+interface getPassengersForFlightRequest {
+    flight: FlightId;
+    user: UserId;
+}
+interface getPassengersForFlightResponse {
+    passengers: UserId[];
+}
 
 export async function getPassengers(loginState: LoginState): Promise<passenger[]> {
     const sendStruct: getPassengersForUserRequest = {
@@ -213,4 +220,28 @@ export async function getPassengerFlights(loginState: LoginState): Promise<Fligh
     returnData = await checkResponse<getFlightsAsPassengerResponse>(loginState, response)
 
     return returnData.flights;
+} 
+
+
+export async function getPassengersForFlight(loginState: LoginState, flightId: FlightId): Promise<UserId[]> {
+    const sendStruct: getPassengersForFlightRequest = {
+        user: loginState.email,
+        flight: flightId
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "getPassengersForFlight";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    let returnData: getPassengersForFlightResponse;
+
+    returnData = await checkResponse<getPassengersForFlightResponse>(loginState, response)
+
+    return returnData.passengers;
 } 
