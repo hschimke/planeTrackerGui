@@ -42,6 +42,7 @@ import PaxPopup from "$lib/components/flightList/paxPopup.svelte";
 
     td.pax {
         max-width: 3em;
+        position: relative;
     }
 
     @media only screen and (max-width: 600px) {

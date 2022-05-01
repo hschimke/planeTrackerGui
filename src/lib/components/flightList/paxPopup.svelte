@@ -20,7 +20,7 @@
     }
 </script>
 
-<div>
+<div class="paxPopup" style="--display-level:{show ? 'visible' : 'hidden'}">
     {#if show}
         {#await passengerListPromise}
             <p>loading...</p>
@@ -36,3 +36,16 @@
         {/await}
     {/if}
 </div>
+
+<style>
+    .paxPopup {
+        visibility: var(--display-level);
+        border: 1px solid black;
+        z-index: 1;
+        padding: 0.5em;
+        background-color: aliceblue;
+        position: absolute;
+        top: -5px;
+        right: 105%;
+    }
+</style>
