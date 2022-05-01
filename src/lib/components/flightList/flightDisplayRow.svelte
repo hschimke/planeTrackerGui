@@ -1,16 +1,20 @@
 <script lang="ts">
     import type { Flight } from "$lib/api/flight";
-import PaxPopup from "$lib/components/flightList/paxPopup.svelte";
+    import PaxPopup from "$lib/components/flightList/paxPopup.svelte";
+    import { goto } from '$app/navigation';
     export let flight: Flight;
 
     let paxShowId = "";
 
     const onOver = (flightId) => {
         paxShowId = flightId;
-    }
+    };
     const onOut = (flightId) => {
         paxShowId = "";
-    }
+    };
+    const onPaxClick = (flightId) => {
+        goto(`/sharing/passengers-${flightId}`);
+    };
 </script>
 
 <tr>
@@ -18,7 +22,18 @@ import PaxPopup from "$lib/components/flightList/paxPopup.svelte";
     <td class="airport">{flight.destination}</td>
     <td><a href="/planes/{flight.tail_number}">{flight.tail_number}</a></td>
     <td class="date">{flight.date}</td>
-    <td class="pax" on:mouseleave={() => {onOut(flight.id)}} on:mouseover={() => {onOver(flight.id)}}>
+    <td
+        class="pax"
+        on:mouseleave={() => {
+            onOut(flight.id);
+        }}
+        on:mouseover={() => {
+            onOver(flight.id);
+        }}
+        on:click={() => {
+            onPaxClick(flight.id);
+        }}
+    >
         {flight.passenger_count}
         <PaxPopup flightId={flight.id} show={paxShowId === flight.id} />
     </td>
