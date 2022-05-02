@@ -7,8 +7,11 @@
         getPassengersForFlight,
         removePassengerFrom,
     } from "$lib/api/passengers";
+    import {getFlightDetails} from "$lib/api/flight";
 
     const flight = $page.params.flight;
+
+    let flightDetailsPromise = getFlightDetails($loginState,flight);
 
     let passengersPromise = getPassengers($loginState);
     let passengersOnFlightPromise = getPassengersForFlight($loginState, flight);
@@ -24,6 +27,11 @@
 </script>
 
 <h2>Passengers</h2>
+{#await flightDetailsPromise}
+    ...loading flight...
+{:then flightDetails} 
+    {flightDetails.origin} -> {flightDetails.destination}
+{/await}
 {#await passengersPromise}
     ... wait passengers ...
 {:then passengers}

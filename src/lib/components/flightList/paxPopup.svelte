@@ -29,7 +29,9 @@
                 No Passengers
             {/if}
             {#each passengerList as passenger}
-                {passenger}<br />
+                <div>
+                    {passenger}
+                </div>
             {/each}
         {:catch e}
             {e}

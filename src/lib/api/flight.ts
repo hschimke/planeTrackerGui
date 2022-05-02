@@ -62,6 +62,13 @@ declare interface PlaneDetailResponse {
     }[]
 }
 
+declare interface GetFlightDetailRequest {
+    user_id: UserId;
+    flight_id: FlightId;
+}
+
+type GetFlightDetailResponse = Flight
+
 export async function getFlights(loginState: LoginState): Promise<Flight[]> {
     const sendStruct: GetAllRequest = {
         user: loginState.email
@@ -185,4 +192,23 @@ export async function getPlaneDetails(loginState: LoginState, tail: PlaneTail): 
     return returnData;
 }
 
-export async function addPassengerToFlight(loginState: LoginState) { }
+export async function getFlightDetails(loginState: LoginState, flight_id: FlightId): Promise<GetFlightDetailResponse> {
+    const sendStruct: GetFlightDetailRequest = {
+        user_id: loginState.email,
+        flight_id: flight_id
+    };
+    const address = API_PREFIX + "/" + API_VERSION + "getFlightDetail";
+    const response = await fetch(address, {
+        method: "POST",
+        body: JSON.stringify(sendStruct),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + loginState.token,
+            "X-PlaneTracker-Auth-Type-Request": loginState.type
+        }
+    });
+
+    const returnData: GetFlightDetailResponse = await checkResponse<GetFlightDetailResponse>(loginState, response)
+
+    return returnData;
+}
