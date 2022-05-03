@@ -7,30 +7,31 @@
         getPassengersForFlight,
         removePassengerFrom,
     } from "$lib/api/passengers";
-    import {getFlightDetails} from "$lib/api/flight";
+    import { getFlightDetails } from "$lib/api/flight";
 
     const flight = $page.params.flight;
 
-    let flightDetailsPromise = getFlightDetails($loginState,flight);
+    let flightDetailsPromise = getFlightDetails($loginState, flight);
 
     let passengersPromise = getPassengers($loginState);
     let passengersOnFlightPromise = getPassengersForFlight($loginState, flight);
 
     const addPax = async (passenger) => {
-        await addPassengerToFlight($loginState,flight,passenger);
+        await addPassengerToFlight($loginState, flight, passenger);
         passengersOnFlightPromise = getPassengersForFlight($loginState, flight);
     };
     const removePax = async (passenger) => {
-        await removePassengerFrom($loginState,flight,passenger)
+        await removePassengerFrom($loginState, flight, passenger);
         passengersOnFlightPromise = getPassengersForFlight($loginState, flight);
     };
 </script>
 
-<h2>Passengers</h2>
 {#await flightDetailsPromise}
-    ...loading flight...
-{:then flightDetails} 
-    {flightDetails.origin} -> {flightDetails.destination}
+    <h2>Passengers</h2>
+{:then flightDetails}
+    <h2>
+        Passengers on {flightDetails.origin} -> {flightDetails.destination} [{flightDetails.date}]
+    </h2>
 {/await}
 {#await passengersPromise}
     ... wait passengers ...
@@ -76,5 +77,6 @@
     .passengerFlightListBox {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+        max-width: 30em;
     }
 </style>
