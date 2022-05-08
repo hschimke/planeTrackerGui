@@ -9,7 +9,7 @@
 
 </script>
 
-<h2>Flight Detailss for {tail}</h2>
+<h2>Flight Details for {tail}</h2>
 {#await detailsPromise}
     <p>loading...</p>
 {:then detail} 
