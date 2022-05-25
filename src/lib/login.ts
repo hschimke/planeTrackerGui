@@ -17,7 +17,9 @@ export async function performLogout(state: LoginState) {
     // TODO this code should actually do a login and not just set the store value
     if (state.type === "google") {
         if (browser) {
+            try{
             google.accounts.id.disableAutoSelect();
+            }catch(e){}
         }
     }
     loginState.set({ email: "", token: "", type: "" })
