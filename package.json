@@ -4,7 +4,7 @@
   "license": "mid",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
+    "build": "vite build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -22,7 +22,8 @@
   },
   "type": "module",
   "dependencies": {
-    "jwt-decode": "^3.1.2"
+    "jwt-decode": "^3.1.2",
+    "vite": "^3.0.4"
   },
   "engines": {
     "node": ">=17.0.0"
