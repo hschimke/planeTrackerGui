@@ -1,6 +1,6 @@
 {
   "name": "planetrackergui",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "license": "mid",
   "scripts": {
     "dev": "svelte-kit dev",
